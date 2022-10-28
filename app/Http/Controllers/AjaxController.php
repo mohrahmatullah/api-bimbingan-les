@@ -76,7 +76,7 @@ class AjaxController extends Controller
         // Check Request Berdasarkan Params
         if($request->params == 'biodata_list'){
 
-            // Delete berdasarkan id
+            // Show berdasarkan id
             $data = Biodata::where('id_user',$request->id_user)->first();
             if($data){
 
@@ -90,7 +90,7 @@ class AjaxController extends Controller
         // Check Request Berdasarkan Params
         elseif($request->params == 'kelas_list'){
 
-            // Delete berdasarkan id
+            // Show berdasarkan id
             $data = Kelas::find($request->id);
             if($data){
 
@@ -104,7 +104,7 @@ class AjaxController extends Controller
         // Check Request Berdasarkan Params
         elseif($request->params == 'jurusan_list'){
 
-            // Delete berdasarkan id
+            // Show berdasarkan id
             $data = Jurusan::find($request->id);
             if($data){
 
@@ -118,7 +118,7 @@ class AjaxController extends Controller
         // Check Request Berdasarkan Params
         elseif($request->params == 'jadwal_belajar_list'){
 
-            // Delete berdasarkan id
+            // Show berdasarkan id
             $data = Jadwal_belajar::find($request->id);
             if($data){
 
@@ -132,8 +132,8 @@ class AjaxController extends Controller
         // Check Request Berdasarkan Params
         elseif($request->params == 'transaction_list'){
 
-            // Delete berdasarkan id
-            $data = Transaction::find($request->id);
+            // Show berdasarkan id
+            $data = Transaction::with('biodata','kelas','jurusan','jadwal_belajar')->where('id',$request->id)->get();
             if($data){
 
                 // Variable Response Code, Data, Messages, Status

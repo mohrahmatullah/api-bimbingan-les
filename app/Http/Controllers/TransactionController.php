@@ -12,7 +12,7 @@ class TransactionController extends Controller
     public function index()
     {
         // GET Product
-        $table = Transaction::all();
+        $table = Transaction::with('biodata','kelas','jurusan','jadwal_belajar')->get();
 
         // Array Variable
         $data = array();
@@ -105,21 +105,15 @@ class TransactionController extends Controller
 
     public function autoCancelTransaction(Request $request)
     {
-        $table = Transaction::all();
-        foreach($table as $row){
+        $data = autoCancelTransaction();
 
-            $create_at = date("Y-m-d H:i:s", strtotime($row->created_at));
-            $time_limit = date("Y-m-d H:i:s", strtotime($row->created_at . " +1 hours"));
-            if($create_at < $time_limit){
-
-                $result[] = Transaction::where('status','pending')->update(['status' => 'cancel']);
-            }
-        }  
-
-        // Variable Response Code, Data, Messages, Status
-        $response = ['code' => 200, 'msg' => 'success', 'status' => true];
-        // Return Response Json
-        return response()->json($response);
+        if($data){
+            // Variable Response Code, Data, Messages, Status
+            $response = ['code' => 200, 'msg' => 'success', 'status' => true];
+            // Return Response Json
+            return response()->json($response);
+        }
+        
     }
 
 }

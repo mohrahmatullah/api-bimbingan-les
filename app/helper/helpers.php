@@ -1,7 +1,8 @@
 <?php 
 
-function respons()
+use App\Library\GetFunction;
+
+function autoCancelTransaction()
 {
-	$respons = 'teesting';
-	return $respons;
+  	return GetFunction::autoCancelTransaction();
 }
