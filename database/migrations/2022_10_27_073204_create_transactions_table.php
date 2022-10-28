@@ -20,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('id_jurusan');
             $table->foreignId('id_jadwal');
             $table->enum('les', ['online','offline'])->nullable();
+            $table->enum('status', ['pending','approve','cancel'])->nullable();
             $table->timestamps();
         });
     }

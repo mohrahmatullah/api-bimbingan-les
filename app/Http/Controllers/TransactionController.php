@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Requests\TransactionRequest;
+use Mail;
 
 class TransactionController extends Controller
 {
@@ -38,9 +39,31 @@ class TransactionController extends Controller
     {
         // Call Function Create
         $table = $this->create($CreateRequest);
+        if($table){
 
-        // Variable Response Code, Data, Messages, Status
-        $response = ['code' => 200, 'data' => $table, 'msg' => 'save success', 'status' => true];
+            $email = auth()->user()->email;
+            $biodata = \App\Models\Biodata::find($CreateRequest->id_biodata);
+            $kelas = \App\Models\Kelas::find($CreateRequest->id_kelas);
+            $jurusan = \App\Models\Jurusan::find($CreateRequest->id_jurusan);
+            $jadwal_belajar = \App\Models\Jadwal_belajar::find($CreateRequest->id_jadwal);
+
+            Mail::send('invoice',
+                    array(
+                       'biodata' => $biodata->nama,
+                       'kelas' => $kelas->nama,
+                       'jurusan' => $jurusan->nama_jurusan,
+                       'jadwal_belajar' => $jadwal_belajar->waktu,
+                       'les' => $CreateRequest->les,
+                   ), function ($msg) use ($CreateRequest, $email)
+                    {                                                 
+                          $msg->subject("INVOICE PEMBAYARAN REGISTRASI LES");
+                          $msg->from('rahmatfitri104@gmail.com');
+                          $msg->to($email, 'User');
+                    });
+
+            // Variable Response Code, Data, Messages, Status
+            $response = ['code' => 200, 'data' => $table, 'msg' => 'save success', 'status' => true];
+        }
 
         // Return Response Json
         return response()->json($response);
@@ -61,7 +84,8 @@ class TransactionController extends Controller
         $table->id_kelas                        = $request->id_kelas;
         $table->id_jurusan                      = $request->id_jurusan;
         $table->id_jadwal                       = $request->id_jadwal; 
-        $table->les                             = $request->les;       
+        $table->les                             = $request->les;    
+        $table->status                          = 'pending';   
         $table->save();
 
         // Return Data

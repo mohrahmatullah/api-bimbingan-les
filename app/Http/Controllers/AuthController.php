@@ -60,7 +60,6 @@ class AuthController extends Controller
     }
 
     public function sendLinkForgotPassword(Request $request){
-        // return $request;
 
         Mail::send('sendLink',
                 array(
