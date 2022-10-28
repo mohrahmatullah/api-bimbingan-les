@@ -93,4 +93,33 @@ class TransactionController extends Controller
 
     }
 
+    public function approveTransaction(Request $request)
+    {
+        return Transaction::where('id',$request->id)->update(['status' => 'approve']);
+    }
+
+    public function cancelTransaction(Request $request)
+    {
+        return Transaction::where('id',$request->id)->update(['status' => 'cancel']);
+    }
+
+    public function autoCancelTransaction(Request $request)
+    {
+        $table = Transaction::all();
+        foreach($table as $row){
+
+            $create_at = date("Y-m-d H:i:s", strtotime($row->created_at));
+            $time_limit = date("Y-m-d H:i:s", strtotime($row->created_at . " +1 hours"));
+            if($create_at < $time_limit){
+
+                $result[] = Transaction::where('status','pending')->update(['status' => 'cancel']);
+            }
+        }  
+
+        // Variable Response Code, Data, Messages, Status
+        $response = ['code' => 200, 'msg' => 'success', 'status' => true];
+        // Return Response Json
+        return response()->json($response);
+    }
+
 }

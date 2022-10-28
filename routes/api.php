@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('transactions', [TransactionController::class, 'index']);
     Route::post('transactions', [TransactionController::class, 'saveUpdate']);
+    Route::post('approve-transactions', [TransactionController::class, 'approveTransaction']);
+    Route::post('cancel-transactions', [TransactionController::class, 'cancelTransaction']);
+    Route::post('auto-cancel-transactions', [TransactionController::class, 'autoCancelTransaction']);
     
     Route::post('delete', [AjaxController::class, 'deleteItemId']);    
     Route::post('show', [AjaxController::class, 'showItemId']);

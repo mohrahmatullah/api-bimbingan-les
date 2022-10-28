@@ -7,4 +7,5 @@
 <p>Jurusan : {{ $jurusan }}</p>
 <p>Jadwal_belajar : {{ $jadwal_belajar }}</p>
 <p>Les : {{ $les }}</p>
+<p>Sistem akan otomatis membatalkan pendaftaran les jika sudah melewati waktu (1 jam) dari anda menerima invoice ini</p>
 <p>Thank You</p>
