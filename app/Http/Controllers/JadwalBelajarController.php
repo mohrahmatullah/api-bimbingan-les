@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jadwal_belajar;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateJadwalBelajarRequest;
-use App\Http\Requests\UpdateJurusanRequest;
+use App\Http\Requests\UpdateJadwalBelajarRequest;
 
 class JadwalBelajarController extends Controller
 {
