@@ -73,7 +73,6 @@ class AuthController extends Controller
                       $msg->to($request->get('email'), 'User');
                 });
 
-
         return response()->json(['msg' => 'success']);
     }
 
