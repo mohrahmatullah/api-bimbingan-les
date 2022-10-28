@@ -132,8 +132,10 @@ class AjaxController extends Controller
         // Check Request Berdasarkan Params
         elseif($request->params == 'transaction_list'){
 
+            $biodata = Biodata::where('id_user', auth()->user()->id)->first();
             // Show berdasarkan id
-            $data = Transaction::with('biodata','kelas','jurusan','jadwal_belajar')->where('id',$request->id)->get();
+            $data = Transaction::with('biodata','kelas','jurusan','jadwal_belajar')->where('id_biodata', $biodata->id)->get();
+            
             if($data){
 
                 // Variable Response Code, Data, Messages, Status
