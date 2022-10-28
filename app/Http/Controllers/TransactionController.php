@@ -106,7 +106,7 @@ class TransactionController extends Controller
     public function autoCancelTransaction(Request $request)
     {
         $data = autoCancelTransaction();
-
+        
         if($data){
             // Variable Response Code, Data, Messages, Status
             $response = ['code' => 200, 'msg' => 'success', 'status' => true];

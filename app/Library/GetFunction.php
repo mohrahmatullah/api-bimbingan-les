@@ -2,6 +2,7 @@
 namespace App\Library;
 
 use App\Models\Transaction;
+use DateTime;
 
 class GetFunction
 {
@@ -13,25 +14,21 @@ class GetFunction
    */
 	public static function autoCancelTransaction()
 	{
-		$table = Transaction::all();
+		$table = Transaction::where('status','pending')->get();
 		foreach($table as $row){
 			
-			$create_at = date("Y-m-d H:i:s", strtotime($row->created_at));
-			$order_expired_date = date('Y-m-d H:i:s', strtotime($row->created_at . ' +2 minutes'));
+			$start = date("Y-m-d H:i:s", strtotime($row->created_at));
+			// $order_expired_date = date('Y-m-d H:i:s', strtotime($row->created_at . ' +2 minutes'));
+			// $order_expired_date = date('Y-m-d H:i:s', strtotime($row->created_at . ' +1 hours'));
 
-			if($create_at > $order_expired_date){
-				$result[] = Transaction::where('status','pending')->update(['status' => 'cancel']);
-			}
-			// $now	=	date('Y-m-d H:i:s', strtotime('now'));
-			// $create_at = date("Y-m-d H:i:s", strtotime($row->created_at));
-			// $time_limit = date("Y-m-d H:i:s", strtotime($row->created_at . " +2 minutes"));
-			// // $time_limit = date("Y-m-d H:i:s", strtotime($row->created_at . " +1 hours"));
-			    
-			// if (($now >= $create_at) && ($now <= $time_limit)){
-			//     $result[] = Transaction::where('status','pending')->update(['status' => 'cancel']);
-			// }else{
-			//     echo "NO GO!";  
-			// }
+			$startdate = date("Y-m-d H:i:s", strtotime($row->created_at));
+			// $expire = strtotime($startdate. ' + 2 minutes');
+			$expire = strtotime($startdate. ' + 1 hours');
+			$today = strtotime("now");
+
+			if($today >= $expire){
+			    Transaction::where('status','pending')->update(['status' => 'cancel']);;
+			} 
 
 		}  
 

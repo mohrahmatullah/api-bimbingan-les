@@ -49,6 +49,8 @@ class AuthController extends Controller
         // create token
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        autoCancelTransaction();
+        
         // Return Response Message, Akses Token, Type Token
         return response()->json(['message' => 'Hi '.$user->username.', welcome to home','access_token' => $token, 'token_type' => 'Bearer', 'id' => auth()->user()->id, 'role' => auth()->user()->role ]);
     }
