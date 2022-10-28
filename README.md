@@ -18,7 +18,7 @@ git clone https://github.com/mohrahmatullah/api-bimbingan-les.git
 2. Setup
 
 ```
-$ cd ukur-test-backend-rest-api
+$ cd api-bimbingan-les
 $ composer install
 $ php artisan key:generate
 $ copy .env.example .env
