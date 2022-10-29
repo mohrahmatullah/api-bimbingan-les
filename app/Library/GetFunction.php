@@ -17,10 +17,6 @@ class GetFunction
 		$table = Transaction::where('status','pending')->get();
 		foreach($table as $row){
 			
-			$start = date("Y-m-d H:i:s", strtotime($row->created_at));
-			// $order_expired_date = date('Y-m-d H:i:s', strtotime($row->created_at . ' +2 minutes'));
-			// $order_expired_date = date('Y-m-d H:i:s', strtotime($row->created_at . ' +1 hours'));
-
 			$startdate = date("Y-m-d H:i:s", strtotime($row->created_at));
 			// $expire = strtotime($startdate. ' + 2 minutes');
 			$expire = strtotime($startdate. ' + 1 hours');
